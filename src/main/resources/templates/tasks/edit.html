@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>タスク編集</title>
+    </head>
+    <body>
+        <h1>タスク編集</h1>
+
+        <!-- バリデーションエラーがあれば表示 -->
+        <div th:if="${errors}">
+            <p style="color:red;">入力に誤りがあります。</p>
+            <ul>
+                <li th:each="err : ${errors}" th:text="${err.defaultMessage}"></li>
+            </ul>
+        </div>
+
+        <form th:action="@{/tasks/{id}/edit(id=${task.id})}" method="post" th:object="${task}">
+            <div>
+                <label for="title">タイトル</label>
+                <input type="text" id="title" name="title" th:value="${task.title}" required>
+            </div>
+
+            <div>
+                <label for="description">内容</label>
+                <textarea id="description" name="description" th:text="${task.description}"></textarea>
+            </div>
+
+            <div>
+                <label for="status">ステータス</label>
+                <select id="status" name="status" required>
+                    <option value="TODO" th:selected="${task.status == 'TODO'}">TODO</option>
+                    <option value="DOING" th:selected="${task.status == 'DOING'}">DOING</option>
+                    <option value="DONE" th:selected="${task.status == 'DONE'}">DONE</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="limitDate">期限</label>
+                <input type="date" id="limitDate" name="limitDate" th:value="${task.limitDate}" required>
+            </div>
+
+            <div>
+                <button type="submit">更新</button>
+                <a href="/tasks">
+                    <button type="button">戻る</button>
+                </a>
+            </div>
+        </form>
+    </body>
+</html>

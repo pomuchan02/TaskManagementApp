@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>タスク登録</title>
+    </head>
+    <body>
+        <h1>タスク登録</h1>
+
+        <!-- バリデーションエラーがあれば表示 -->
+        <div th:if="${errors}">
+            <p style="color:red;">入力に誤りがあります。</p>
+            <ul>
+                <li th:each="err : ${errors}" th:text="${err.defaultMessage}"></li>
+            </ul>
+        </div>
+
+        <form th:action="@{/tasks/new}" method="post">
+            <div>
+                <label for="title">タイトル</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+
+            <div>
+                <label for="description">内容</label>
+                <textarea id="description" name="description"></textarea>
+            </div>
+
+            <div>
+                <label>ステータス</label>
+                <input type="hidden" name="status" value="TODO">
+                <span>TODO</span>
+            </div>
+
+            <div>
+                <label for="limitDate">期限</label>
+                <input type="date" id="limitDate" name="limitDate" required>
+            </div>
+
+            <div>
+                <button type="submit">登録</button>
+                <a href="/tasks">
+                    <button type="button">戻る</button>
+                </a>
+            </div>
+        </form>
+    </body>
+</html>
